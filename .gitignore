@@ -1,1 +1,86 @@
-.terraform/*
+# Terraform related files
+terraform/
+.terraform/
+**/.terraform/*
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+.terraformrc
+terraform.rc
+sesitive_variables.tf
+# Crash logs
+crash.log
+crash.*.log
+*.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Credentials and sensitive information
+keycloak-sa.json
+*-credentials.json
+*.pem
+*.key
+.git-credentials
+.ssh/
+.docker/
+.oci/
+.kube/
+.config/
+*_key*
+*token*
+*.pub
+id_*
+
+# Local environment files
+.env
+.envrc
+
+# System files
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Generated artifacts
+*.zip
+*.tar.gz
+
+# Git metadata (for nested Git repos)
+.git/
+**/.git/
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+
+# Cache and logs
+.cache/
+logs/
+*/logs/*
+.terraform.d/
+**/cache/**
+
+# Configuration files that might contain sensitive data
+*.boto
+.viminfo
+.lesshst
+.bash_history
+.bashrc
+.bash_profile
+.bash_logout
+
+# Shell scripts (optional, uncomment if needed)
+# *.sh
+
+# Custom project directories
+rancher/
