@@ -1,20 +1,22 @@
-resource "vcd_vapp" "vm_vapp" {
-  name        = "${var.vm_name}-vapp"
-  description = var.vm_description
-  power_on    = false
+data "vcd_catalog" "vm_catalog" {
+  name = var.catalog_name
 }
-resource "vcd_vapp_vm" "vm" {
-  vapp_name     = vcd_vapp.vm_vapp.name
-  name          = var.vm_name
-  description   = var.vm_description
-  catalog_name  = var.catalog_name
-  template_name = var.template_name
+
+data "vcd_catalog_vapp_template" "vm_template" {
+  catalog_id = data.vcd_catalog.vm_catalog.id
+  name       = var.template_name
+}
+
+resource "vcd_vm" "vm" {
+  name             = var.vm_name
+  description      = var.vm_description
+  vapp_template_id = data.vcd_catalog_vapp_template.vm_template.id
   
-  memory        = var.memory
-  cpus          = var.cpus
-  cpu_cores     = var.cpu_cores
+  cpus             = var.cpus
+  cpu_cores        = var.cpu_cores
+  memory           = var.memory
   
-  power_on      = var.power_on
+  power_on         = var.power_on
   
   # Network configuration
   dynamic "network" {
@@ -22,20 +24,20 @@ resource "vcd_vapp_vm" "vm" {
     content {
       type               = network.value.type
       name               = network.value.name
-      ip_allocation_mode = lookup(network.value, "ip_allocation_mode", "DHCP")
+      ip_allocation_mode = lookup(network.value, "ip_allocation_mode", "POOL")
       ip                 = lookup(network.value, "ip", null)
       is_primary         = lookup(network.value, "is_primary", false)
     }
   }
   
-  # Disk configuration
+  # Override template disk if custom size specified
   dynamic "override_template_disk" {
-    for_each = var.disk_size != null ? [var.disk_size] : []
+    for_each = var.disk_size != null ? [1] : []
     content {
-      bus_type        = "paravirtual"
-      size_in_mb      = override_template_disk.value
-      bus_number      = 0
-      unit_number     = 0
+      bus_type    = "paravirtual"
+      size_in_mb  = var.disk_size
+      bus_number  = 0
+      unit_number = 0
     }
   }
   
@@ -58,12 +60,13 @@ resource "vcd_vapp_vm" "vm" {
     }
   }
   
-  # Metadata
+  # Metadata - always add terraform created_by tag
   metadata_entry {
-    key   = "created_by"
+    key   = "created_by" 
     value = "terraform"
   }
   
+  # Additional metadata from configuration
   dynamic "metadata_entry" {
     for_each = var.metadata
     content {

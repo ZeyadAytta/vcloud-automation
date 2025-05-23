@@ -1,3 +1,4 @@
+
 variable "vm_name" {
   description = "Name of the VM"
   type        = string
@@ -47,7 +48,7 @@ variable "networks" {
 }
 
 variable "disk_size" {
-  description = "Additional disk size in MB"
+  description = "Override template disk size in MB"
   type        = number
   default     = null
 }
