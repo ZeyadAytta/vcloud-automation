@@ -1,5 +1,3 @@
-
-# variables.tf - Root module variables
 variable "vcd_user" {
   description = "vCloud Director username"
   type        = string
@@ -38,11 +36,6 @@ variable "vcd_allow_unverified_ssl" {
   default     = false
 }
 
-variable "catalog_name" {
-  description = "vCloud Director catalog name"
-  type        = string
-}
-
 variable "environment" {
   description = "Environment name (dev, staging, prod)"
   type        = string
@@ -53,35 +46,4 @@ variable "project_name" {
   description = "Project name for resource tagging"
   type        = string
   default     = "vcloud-infrastructure"
-}
-
-variable "virtual_machines" {
-  description = "List of virtual machines to create"
-  type = list(object({
-    name                    = string
-    description            = optional(string, "VM managed by Terraform")
-    template_name          = string
-    cpus                   = number
-    cpu_cores              = optional(number, 1)
-    memory                 = number
-    storage_profile        = optional(string, "")
-    disk_size_in_mb       = optional(number, 10240)
-    network_name          = string
-    ip_allocation_mode    = optional(string, "DHCP")
-    ip_address           = optional(string)
-    computer_name        = string
-    admin_password       = optional(string)
-    auto_generate_password = optional(bool, false)
-    password_policy_enabled = optional(bool, true)
-    power_on             = optional(bool, true)
-    metadata             = optional(map(string), {})
-    additional_disks     = optional(list(object({
-      name            = string
-      size_in_mb     = number
-      bus_type       = optional(string, "SCSI")
-      bus_sub_type   = optional(string, "lsilogicsas")
-      storage_profile = optional(string, "")
-    })), [])
-  }))
-  default = []
 }

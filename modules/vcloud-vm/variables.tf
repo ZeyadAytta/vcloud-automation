@@ -1,4 +1,3 @@
-
 variable "vm_name" {
   description = "Name of the VM"
   type        = string
@@ -59,10 +58,17 @@ variable "power_on" {
   default     = true
 }
 
-variable "customization" {
-  description = "Guest customization settings"
-  type        = map(any)
-  default     = {}
+variable "admin_password" {
+  description = "Admin password for the VM"
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "initscript" {
+  description = "Initialization script to run on the VM"
+  type        = string
+  default     = null
 }
 
 variable "metadata" {

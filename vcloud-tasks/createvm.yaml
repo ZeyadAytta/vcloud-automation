@@ -1,8 +1,8 @@
 vms:
   - name: "test1"
     description: "Test standalone VM"
-    catalog_name: "Public Catalog"              # Changed from "Public Catalog"
-    template_name: "Centos-8 Template"     # Verify this template exists
+    catalog_name: "Public Catalog"              # Use correct catalog name
+    template_name: "Centos-8 Template"     # Verify this template exists in Templates catalog
     memory: 4096
     cpus: 2
     cpu_cores: 1
@@ -24,3 +24,4 @@ vms:
     metadata:
       Environment: "Test"
       Owner: "TestTeam"
+  

@@ -7,16 +7,17 @@ data "vcd_catalog_vapp_template" "vm_template" {
   name       = var.template_name
 }
 
+# Create standalone VM (not in vApp)
 resource "vcd_vm" "vm" {
-  name             = var.vm_name
-  description      = var.vm_description
-  vapp_template_id = data.vcd_catalog_vapp_template.vm_template.id
+  name               = var.vm_name
+  description        = var.vm_description
+  vapp_template_id   = data.vcd_catalog_vapp_template.vm_template.id
   
-  cpus             = var.cpus
-  cpu_cores        = var.cpu_cores
-  memory           = var.memory
+  cpus               = var.cpus
+  cpu_cores          = var.cpu_cores
+  memory             = var.memory
   
-  power_on         = var.power_on
+  power_on           = var.power_on
   
   # Network configuration
   dynamic "network" {
@@ -41,23 +42,14 @@ resource "vcd_vm" "vm" {
     }
   }
   
-  # Guest customization
-  dynamic "customization" {
-    for_each = length(var.customization) > 0 ? [var.customization] : []
-    content {
-      force                      = lookup(customization.value, "force", false)
-      change_sid                 = lookup(customization.value, "change_sid", false)
-      allow_local_admin_password = lookup(customization.value, "allow_local_admin_password", false)
-      auto_generate_password     = lookup(customization.value, "auto_generate_password", false)
-      admin_password             = lookup(customization.value, "admin_password", null)
-      number_of_auto_logons      = lookup(customization.value, "number_of_auto_logons", 0)
-      join_domain                = lookup(customization.value, "join_domain", false)
-      join_domain_name           = lookup(customization.value, "join_domain_name", null)
-      join_domain_user           = lookup(customization.value, "join_domain_user", null)
-      join_domain_password       = lookup(customization.value, "join_domain_password", null)
-      join_domain_account_ou     = lookup(customization.value, "join_domain_account_ou", null)
-      initscript                 = lookup(customization.value, "initscript", null)
-    }
+  # Guest customization for standalone VM
+  customization {
+    force                      = true
+    change_sid                 = true
+    allow_local_admin_password = true
+    auto_generate_password     = false
+    admin_password             = var.admin_password
+    initscript                 = var.initscript
   }
   
   # Metadata - always add terraform created_by tag

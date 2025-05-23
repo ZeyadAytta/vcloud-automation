@@ -3,40 +3,34 @@ module "vcloud_vm" {
   
   for_each = local.vm_configs
   
-  # VM Configuration
+  # VM Configuration from YAML
   vm_name       = each.value.name
   vm_description = each.value.description
-  catalog_name  = var.catalog_name
+  catalog_name  = "Public Catalog"  # Use the correct catalog name
   template_name = each.value.template_name
   
-  # Resource allocation
+  # Resource allocation from YAML
   cpus      = each.value.cpus
   cpu_cores = each.value.cpu_cores
   memory    = each.value.memory
   
-  # Storage configuration
-  disk_size = lookup(each.value, "disk_size_in_mb", null)
-  
-  # Network configuration - convert to module format
+  # Network configuration from YAML
   networks = [{
     type               = "org"
     name               = each.value.network_name
     ip_allocation_mode = each.value.ip_allocation_mode
-    ip                 = lookup(each.value, "ip_address", null)
     is_primary         = true
   }]
   
-  # Guest customization - convert to module format
-  customization = {
-    admin_password = lookup(each.value, "admin_password", null)
-    auto_generate_password = lookup(each.value, "auto_generate_password", false)
-  }
+  # Customization from YAML
+  admin_password = each.value.admin_password
+  initscript     = each.value.initscript
   
-  # Power management
-  power_on = lookup(each.value, "power_on", true)
+  # Power management from YAML
+  power_on = each.value.power_on
   
-  # Tags and metadata
-  metadata = merge(local.common_tags, lookup(each.value, "metadata", {}))
+  # Metadata from YAML
+  metadata = merge(local.common_tags, each.value.metadata)
   
   # Dependencies
   depends_on = [

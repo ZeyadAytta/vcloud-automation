@@ -1,4 +1,3 @@
-
 # vCloud Director connection details
 vcd_user     = "az1-svc-avamar"
 vcd_password = "A$123456789"
@@ -8,23 +7,6 @@ vcd_url      = "https://az01.etisalat-cloud.com/api"
 vcd_max_retry_timeout = 60
 vcd_allow_unverified_ssl = false
 
-# Catalog configuration
-catalog_name = "Public Catalog"
-
-# VM configuration
-virtual_machines = [
-  {
-    name               = "test1"
-    description        = "Test VM created by Terraform"
-    template_name      = "Centos-8 Template"
-    cpus              = 2
-    cpu_cores         = 1
-    memory            = 4096
-    disk_size_in_mb   = 20480
-    network_name      = "NPOC-VLAN10"
-    ip_allocation_mode = "POOL"
-    computer_name     = "test1"
-    admin_password    = "SecurePassword123!"
-    power_on          = true
-  }
-]
+# Environment settings
+environment = "test"
+project_name = "vcloud-standalone-vms"
