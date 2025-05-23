@@ -38,8 +38,8 @@ data "vcd_org_vdc" "main" {
 
 data "vcd_catalog" "main" {
   name = "Public Catalog"
+  org  = "Templates"  # Specify the source organization
 }
-
 data "vcd_catalog_vapp_template" "template" {
   for_each    = local.vm_configs
   catalog_id  = data.vcd_catalog.main.id
