@@ -2,7 +2,7 @@
 
 This Terraform configuration creates and manages virtual machines in VMware vCloud Director using YAML-based configuration files. It supports both Linux and Windows VMs with customizable resource allocation, networking, and metadata.
 
-## 🚀 Features
+##  Features
 
 - **YAML-driven configuration** - Define VMs in simple YAML files
 - **Standalone VM deployment** - Creates VMs outside of vApps
@@ -12,7 +12,7 @@ This Terraform configuration creates and manages virtual machines in VMware vClo
 - **Metadata tagging** - Automatic and custom metadata assignment
 - **Modular design** - Reusable Terraform modules
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 ├── locals.tf                    # Local values and YAML parsing
@@ -33,14 +33,14 @@ This Terraform configuration creates and manages virtual machines in VMware vClo
 └── README.md                   # This file
 ```
 
-## 🔧 Prerequisites
+##  Prerequisites
 
 - **Terraform** >= 1.0
 - **VMware vCloud Director** access with appropriate permissions
 - **Valid vCD credentials** with VM creation rights
 - **Network access** to vCloud Director API endpoint
 
-## ⚙️ Configuration
+##  Configuration
 
 ### 1. Update Connection Details
 
@@ -95,7 +95,7 @@ vms:
       OS: "Linux"
 ```
 
-## 🚀 Deployment
+##  Deployment
 
 ### 1. Initialize Terraform
 
@@ -121,7 +121,7 @@ terraform apply
 terraform output
 ```
 
-## ��️ VM Configuration Options
+##  VM Configuration Options
 
 ### Linux VM Example
 
@@ -179,7 +179,7 @@ terraform output
     OS: "Windows"
 ```
 
-## 🔄 Guest Customization
+## Guest Customization
 
 ### Current Status
 Guest customization is **commented out** by default due to potential API compatibility issues. To enable:
@@ -213,7 +213,7 @@ customization {
 }
 ```
 
-## 🌐 Network Configuration
+##  Network Configuration
 
 ### IP Allocation Modes
 - **POOL** - Automatic IP from network pool
@@ -230,7 +230,7 @@ networks:
     is_primary: true
 ```
 
-## 📊 Outputs
+##  Outputs
 
 The module provides the following outputs:
 
@@ -246,7 +246,7 @@ terraform output vm_details
 terraform output vm_ids
 ```
 
-## 🏷️ Metadata and Tags
+##  Metadata and Tags
 
 ### Automatic Tags
 All VMs automatically receive these metadata tags:
@@ -266,13 +266,13 @@ metadata:
   BackupSchedule: "Daily"
 ```
 
-## 🔍 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
 #### 1. Catalog Not Found
 ```
-Error: catalog 'Public Catalog' not found in org 'Your-Org'
+Error: catalog 'example' not found in org 'Your-Org'
 ```
 **Solution**: Verify catalog name and organization. For shared catalogs, ensure the `org` parameter is correctly set in the data source.
 
@@ -302,7 +302,7 @@ export TF_LOG=DEBUG
 terraform plan
 ```
 
-## �� Security Considerations
+## Security Considerations
 
 ### Sensitive Data
 - Store passwords in environment variables or use Terraform Cloud/Vault
@@ -315,7 +315,7 @@ export TF_VAR_vcd_password="your-secure-password"
 terraform apply
 ```
 
-## 📝 Customization Guide
+##  Customization Guide
 
 ### Adding More VMs
 Simply add more VM definitions to `vcloud-tasks/createvm.yaml`:
@@ -351,31 +351,11 @@ template_name: "Windows-Server-2019"
 template_name: "Ubuntu-20.04-LTS"
 ```
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review Terraform and vCloud Director documentation
-3. Open an issue with detailed error messages and configuration
-
-## 📚 Additional Resources
+##  Additional Resources
 
 - [VMware vCloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/)
 - [Terraform vCD Provider Documentation](https://registry.terraform.io/providers/vmware/vcd/latest/docs)
 - [Terraform Best Practices](https://www.terraform.io/docs/cloud/guides/recommended-practices/index.html)
 
 ---
-
-**Made with ❤️ for VMware vCloud Director automation**
