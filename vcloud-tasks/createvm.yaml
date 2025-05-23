@@ -1,0 +1,28 @@
+vms:
+  - name: "test1"
+    description: "Web server for production environment"
+    catalog_name: "Public Catalog"
+    template_name: "Centos-8 Template"
+    memory: 4096
+    cpus: 2
+    cpu_cores: 1
+    power_on: true
+    disk_size: 51200  # 50GB in MB
+    networks:
+      - type: "org"
+        name: "NPOC-VLAN10"
+        ip_allocation_mode: "DHCP"
+        is_primary: true
+    customization:
+      change_sid: true
+      admin_password: "SecurePassword123!"
+      initscript: |
+        #!/bin/bash
+        yum update -y
+        yum install -y nginx
+        systemctl enable nginx
+        systemctl start nginx
+    metadata:
+      Environment: "Production"
+      Owner: "WebTeam"
+      Project: "MainWebsite"
